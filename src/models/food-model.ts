@@ -12,6 +12,29 @@ async function fetchFoods() {
     }
 }
 
+async function fetchFoodsWithName(name: string) {
+    try {
+        const db = await connectToDatabase()
+        const findFood = await db.collection("foods").findOne({ name: name });
+        console.log(findFood);
+        return findFood
+    } catch (err) {
+        console.error("Não encontrado")
+    }
+}
+
+async function fetchFoodsWithType(type: string) {
+    try {
+        const db = await connectToDatabase()
+        const findFoods = await db.collection("foods").find({ type: type }).toArray();
+        console.log(findFoods);
+        return findFoods;
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+
 async function insertFoods() {
     try {
         const db = await connectToDatabase();
@@ -25,5 +48,7 @@ async function insertFoods() {
 
 module.exports = {
     fetchFoods,
-    insertFoods
+    insertFoods,
+    fetchFoodsWithName,
+    fetchFoodsWithType
 }
