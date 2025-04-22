@@ -5,7 +5,7 @@ const uri = `mongodb+srv://${process.env.ADMIN}:${process.env.PASSWORD}@${proces
 
 const client = new MongoClient(uri);
 
-let dbconnection: Db;
+let dbconnection: Db | undefined;
 export async function connectToDatabase(): Promise<Db> {
 
     if (!dbconnection) {
@@ -22,4 +22,15 @@ export async function connectToDatabase(): Promise<Db> {
     return dbconnection;
 }
 
-connectToDatabase()
+export async function disconnectToDatabase(): Promise<void> {
+    if (client) {
+        try {
+            await client.close()
+            console.log({ success: "Desconectado do MongoDB com sucesso" })
+            dbconnection = undefined
+
+        } catch (err) {
+            console.error({ Error: "Erro ao desconectar do MongoDB" }, err)
+        }
+    }
+}
