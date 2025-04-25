@@ -1,5 +1,4 @@
 import { connectToDatabase, disconnectToDatabase } from "../config/db-config";
-const foodjson = require("../food.json");
 
 async function fetchFoods() {
   try {
@@ -42,20 +41,8 @@ async function fetchFoodsByType(type: string) {
   }
 }
 
-async function insertFoods() {
-  try {
-    const db = await connectToDatabase();
-    const insertFoods = await db.collection("foods").insertMany(foodjson);
-    console.log(insertFoods);
-    await disconnectToDatabase();
-  } catch (err) {
-    console.error("Não foi encontrado");
-  }
-}
-
 module.exports = {
   fetchFoods,
-  insertFoods,
   fetchFoodsByName,
   fetchFoodsByType,
 };

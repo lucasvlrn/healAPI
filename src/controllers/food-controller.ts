@@ -36,18 +36,6 @@ const fetchFoods = async (request: Request, response: Response) => {
   }
 };
 
-const insertFoods = async (request: Request, response: Response) => {
-  try {
-    const foods = await foodsModel.insertFoods();
-    return response
-      .status(201)
-      .json({ success: "Inserido todos os alimentos", foods });
-  } catch (err) {
-    return response.status(500).json({ Error: "Erro do servidor", err });
-  }
-};
-
 module.exports = {
   fetchFoods,
-  insertFoods,
 };
