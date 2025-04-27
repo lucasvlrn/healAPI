@@ -41,8 +41,48 @@ async function fetchFoodsByType(type: string) {
   }
 }
 
+async function fetchFoodsByCarb(carbohydrates: number) {
+  if (isNaN(carbohydrates)) {
+    return "Isto deve ser um valor numérico.";
+  }
+  try {
+    const db = await connectToDatabase();
+    const findFoods = await db
+      .collection("foods")
+      .find({ carbohydrates: Number(carbohydrates) })
+      .toArray();
+    console.log(findFoods);
+    await disconnectToDatabase();
+    return findFoods;
+  } catch (err) {
+    console.error("Não encontrado", err);
+  }
+  return "Coloque um valor";
+}
+
+async function fetchFoodsByProtein(proteins: number) {
+  if (isNaN(proteins)) {
+    return "Isto deve ser um valor numérico.";
+  }
+  try {
+    const db = await connectToDatabase();
+    const findFoods = await db
+      .collection("foods")
+      .find({ proteins: Number(proteins) })
+      .toArray();
+    console.log(findFoods);
+    await disconnectToDatabase();
+    return findFoods;
+  } catch (err) {
+    console.error("Não encontrado", err);
+  }
+  return "Coloque um valor";
+}
+
 module.exports = {
   fetchFoods,
   fetchFoodsByName,
   fetchFoodsByType,
+  fetchFoodsByCarb,
+  fetchFoodsByProtein,
 };
